@@ -1,0 +1,22 @@
+@extends('layouts.admin')
+
+@section('content')
+<div class="admin-dashboard">
+    <h1 class="dashboard-title">管理者画面</h1>
+    <div class="dashboard-content">
+        <div class="dashboard-card">
+            <h2 class="card-title">店舗代表者管理</h2>
+            <form action="{{route('admin.shop-owners.index')}}" method="GET">
+                <button class="button-link" type="submit">一覧を見る</button>
+            </form>
+        </div>
+        <div class="dashboard-card">
+            <h2 class="card-title">ユーザー管理</h2>
+            <form action="{{route('admin.users.index')}}" method="GET">
+                <button class="button-link" type="submit">一覧を見る</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@endsection

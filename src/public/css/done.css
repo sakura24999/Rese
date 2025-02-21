@@ -1,0 +1,43 @@
+.done-container {
+    width: 100%;
+    min-height: calc(100vh - 60ps);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.done-message {
+    font-size: 24px;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.back-btn {
+    padding: 8px 40px;
+    background: #1d65f6;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    border: none;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+}
+
+.back-btn:hover {
+    background-color: #3a78f5;
+}
+
+@media(max-width: 768px) {
+    .done-card {
+        padding: 30px 20px;
+    }
+
+    .done-message {
+        font-size: 20px;
+    }
+}

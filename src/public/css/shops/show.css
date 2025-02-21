@@ -1,0 +1,159 @@
+.shop-detail {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.back-button {
+    margin-bottom: 30px;
+}
+
+.back-link {
+    display: flex;
+    align-items: center;
+}
+
+.back-link .material-icons {
+    margin-right: 8px;
+    font-size: 24px;
+}
+
+.back-button a {
+    display: flex;
+    align-items: center;
+    color: #000;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.back-button a span {
+    background: white;
+    padding: 8px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    margin-right: 8px;
+}
+
+.shop-container {
+    display: grid;
+    grid-template-columns: minmax(300px, 500px) auto auto;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.shop-info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.shop-image {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.shop-tags {
+    margin: 10px 0;
+}
+
+.shop-description {
+    margin-top: 15px;
+    line-height: 1.6;
+    writing-mode: horizontal-tb;
+    width: 100%;
+}
+
+.area-tag,
+.genre-tag {
+    margin-right: 10px;
+    color: #666;
+}
+
+.reservation-container {
+    grid-column: 3;
+    width: 360px;
+    background: #4169e1;
+    padding: 30px;
+    border-radius: 5px;
+    color: white;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group input[type='date'],
+.form-group select {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    background: white;
+    margin-bottom: 15px;
+}
+
+.reservation-confirmation {
+    background: rgba(255,255,255,0.1);
+    padding: 20px;
+    border-radius: 4px;
+    margin: 20px 0;
+}
+
+.reservation-confirmation table {
+    width: 100%;
+}
+
+.reservation-confirmation th {
+    text-align: left;
+    padding: 5px 0;
+    width: 80px;
+}
+
+.reservation-button {
+    width: 100%;
+    padding: 15px;
+    background: #2196f3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
+.reservation-button:hover {
+    background: #1976D2;
+}
+
+.reservation-form {
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 30px;
+}
+
+@media(max-width: 768px) {
+    .shop-container {
+        grid-template-columns: 1fr;
+    }
+
+    .shop-info {
+        grid-column: 1;
+        width: 100%;
+        max-width: none;
+    }
+
+    .reservation-container {
+        grid-column: 1;
+        width: 100%;
+        max-width: none;
+    }
+
+    .back-button {
+        padding: 10px;
+    }
+}
