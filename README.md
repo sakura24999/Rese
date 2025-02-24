@@ -57,3 +57,50 @@ Reseは企業のグループ会社向けに開発された飲食店予約サー�
 【認証】
 
 ・メールによって本人確認を行うことができる
+
+
+🎯 ターゲットユーザー
+
+・20〜30代の社会人
+・グループ企業に所属する従業員
+
+💻 動作環境
+
+・PC: Chrome/Firefox/Safari 最新バージョン
+
+🚀 セットアップ手順
+必要要件
+
+・PHP（Laravelの動作要件を満たすバージョン）
+・Composer
+・Node.js & npm
+・MySQL
+
+【インストール手順】
+
+1.リポジトリのクローン
+git clone https://github.com/sakura24999/Rese.git
+cd Rese
+
+2.環境変数の設定
+cp .env.example .env
+
+3.依存パッケージのインストール
+composer install
+npm install
+
+4.アプリケーションキーの生成
+php artisan key:generate
+
+5.データベースのマイグレーション
+php artisan migrate --seed
+
+6.開発サーバーの起動
+php artisan serve
+
+7.Mailhogの確認方法
+メール送信機能をテストする場合は、Mailhogを使用しています。
+送信されたメールは以下のURLでアクセスして確認できます：
+http://localhost:8025
+
+
