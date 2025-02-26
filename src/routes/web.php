@@ -12,6 +12,7 @@ use App\Http\Controllers\MyPageController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\MailController;
 use App\Http\Controllers\Admin\ShopImageController;
 use App\Http\Controllers\Admin\ShopOwnerController;
 use App\Http\Controllers\Admin\UserController;
@@ -118,6 +119,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::post('/shop-images', [ShopImageController::class, 'store'])->name('shop-images.store');
 
     Route::delete('/shop-images/{filename}', [ShopImageController::class, 'destroy'])->name('shop-images.destroy');
+
+    Route::get('/mail', [MailController::class, 'create'])->name('mail.create');
+
+    Route::post('/mail/send', [MailController::class, 'send'])->name('mail.send');
 });
 
 Route::prefix('owner')->name('owner.')->middleware(['auth', 'role:shop_owner'])->group(function () {
