@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ShopOwnerController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Owner\ShopOwnerDashboardController;
+use App\Http\Controllers\QrCodeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,7 +63,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
         $request->fulfill();
-        return redirect()->route('menu.user');
+        return redirect()->route('shops.index');
     })->middleware(['signed'])->name('verification.verify');
 
     Route::post('/email/verification-notification', function (Request $request) {
@@ -89,6 +90,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('shops/{shop}/reviews', [ReviewController::class, 'index'])->name('reviews.index');
 
     Route::get('shops/{shop}/user-review', [ReviewController::class, 'getUserReview'])->name('reviews.user');
+
+    Route::get('/reservations/{id}/qrcode', [QrCodeController::class, 'show'])->name('reservations.qrcode');
+
+    Route::get('/reservations/{id}/qrcode/generate', [QrCodeController::class, 'generate'])->name('reservations.qrcode.generate');
+
+    Route::post('/qrcode/verify', [QrCodeController::class, 'verify'])->name('qrcode.verify');
+
+    Route::get('/shop/scan', function () {
+        return view('shop.scan');
+    })->name('shop.scan')->middleware('role:shop_owner');
 });
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
