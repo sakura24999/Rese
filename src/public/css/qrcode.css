@@ -1,0 +1,102 @@
+.qrcode-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    min-height: 80vh;
+}
+
+.qrcode-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    max-width: 500px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.qrcode-header {
+    background: #4169e1;
+    color: white;
+    padding: 15px 20px;
+}
+
+.qrcode-header h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.qrcode-content {
+    padding: 25px;
+}
+
+.reservation-details {
+    margin-bottom: 25px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+.reservation-details p {
+    margin: 10px 0;
+    color: #333;
+}
+
+.qrcode-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.qrcode-img {
+    width: 250px;
+    height: 250px;
+    border: 1px solid #eee;
+    padding: 10px;
+    background: white;
+    border-radius: 5px;
+}
+
+.qrcode-instruction {
+    margin-top: 15px;
+    color: #666;
+    text-align: center;
+    font-size: 14px;
+}
+
+.qrcode-actions {
+    margin-top: 25px;
+    text-align: center;
+}
+
+.back-button {
+    background: #4169e1;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.3s;
+    border: none;
+    font-size: 14px;
+}
+
+.back-button:hover {
+    opacity: 0.8;
+}
+
+@media(max-width: 768px) {
+    .qrcode-card {
+        margin: 0 10px;
+    }
+
+    .qrcode-content {
+        padding: 15px;
+    }
+
+    .qrcode-img {
+        width: 200px;
+        height: 200px;
+    }
+}
