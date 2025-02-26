@@ -13,7 +13,7 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         $user = Auth::user();
-        $redirectTo = 'menu.guest';
+        $redirectTo = 'shops.index';
 
         Auth::logout();
         $request->session()->invalidate();
@@ -22,15 +22,15 @@ class LoginController extends Controller
         return redirect()->route($redirectTo);
     }
 
-    
+
     public function redirectTo()
     {
         if (auth()->check()) {
             if (auth()->user()->hasRole('admin')) {
                 return '/admin';
             }
-            return '/menu/user';
+            return '/shops';
         }
-        return '/menu/guest';
+        return '/login';
     }
 }
