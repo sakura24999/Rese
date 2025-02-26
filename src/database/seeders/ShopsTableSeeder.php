@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Shop;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Log;
 
 class ShopsTableSeeder extends Seeder
 {
@@ -13,6 +14,13 @@ class ShopsTableSeeder extends Seeder
      */
     public function run(): void
     {
+        $shop = Shop::where('name', '戦慄')->first();
+        if ($shop) {
+            $shop->image_url = 'https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/izakaya.jpg';
+            $shop->save();
+            Log::info('「戦慄」の画像URLを更新しました');
+        }
+
         $shops = [
             [
                 'name' => '仙人',
