@@ -140,12 +140,13 @@
 }
 
 .dashboard-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
 }
 
 .dashboard-title {
@@ -154,18 +155,17 @@
 }
 
 .dashboard-card {
-    width: 100%;
-    max-width: 500px;
+    width: 80%;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     background-color: white;
     border-radius: 6px;
-    padding: 0.8rem;
-    width: 80%;
-    box-shadow: 0 4px 6px rgba(117, 117, 117, 0.3);
+    margin-left: 20px;
     padding: 20px;
+    box-shadow: 0 4px 6px rgba(117, 117, 117, 0.3);
+    height: 80%;
 }
 
 .card-title {
@@ -494,5 +494,11 @@
 
     .delete-button {
         text-align: center;
+    }
+
+    .dashboard-content {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        padding: 1rem;
     }
 }

@@ -23,6 +23,13 @@
                     <button class="button-link" type="submit">一覧を見る</button>
                 </form>
             </div>
+
+            <div class="dashboard-card">
+                <h2 class="card-title">メール送信</h2>
+                <form action="{{route('admin.mail.create')}}" method="GET">
+                    <button class="button-link" type="submit">メールを送信する</button>
+                </form>
+            </div>
         </div>
     </div>
 
