@@ -7,8 +7,9 @@
 .header {
     display: flex;
     align-items: center;
-    padding: 5px 0;
-    background-color:rgb(245, 245, 245);
+    margin-left: 30px;
+    margin-top: 15px;
+    background-color:rgb(241, 241, 241);
 }
 
 .site-title {
@@ -16,6 +17,9 @@
     align-items: center;
     text-decoration: none;
     gap: 8px;
+    margin-left: 20px;
+    margin-top: 5px;
+    cursor: default;
 }
 
 .menu-icon {
@@ -276,7 +280,7 @@
     font-weight: bold;
     margin-bottom: 15px;
     font-size: 16px;
-    color: #333;
+    color: white;
 }
 
 .modal-actions {
@@ -327,6 +331,25 @@
     outline: none;
     border-color: #4169e1;
     box-shadow: 0 0 0 2px rgba(65, 105, 225, 0.1);
+}
+
+.qr-code-btn {
+    background: #4169e1;
+    color: white;
+    border: 2px solid white;
+    border-radius: 4px;
+    padding: 3px 8px;
+    margin-right: 50px;
+    margin-top: -10px;
+    font-size: 12px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: opacity 0.3s;
+}
+
+.qr-code-btn:hover {
+    opacity: 0.8;
 }
 
 @media(max-width: 768px) {

@@ -15,7 +15,7 @@
     @stack('styles')
 </head>
 
-<body>
+<body class="body-container">
     @yield('content')
 
     <div class="menu-modal" id="guest-menu-modal" style="display: none">
@@ -37,17 +37,18 @@
     <div class="menu-modal" id="user-menu-modal" style="display: none">
         <div class="menu-container">
             <div class="menu-header">
-                <ul class="menu-list">
-                    <li><a href="{{route('shops.index')}}">Home</a></li>
-                    <li><a href="#"
-                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-                    </li>
-                    <li><a href="{{route('mypage.index')}}">Mypage</a></li>
-                </ul>
-                <form action="{{route('logout')}}" id="logout-form" method="POST" style="display:none;"
-                    id="logout-form">
-                    @csrf</form>
+                <button class="close-button" id="close-user-modal">
+                    <span class="material-icons">close</span></button>
             </div>
+            <ul class="menu-list">
+                <li><a href="{{route('shops.index')}}">Home</a></li>
+                <li><a href="#"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                </li>
+                <li><a href="{{route('mypage.index')}}">Mypage</a></li>
+            </ul>
+            <form action="{{route('logout')}}" id="logout-form" method="POST" style="display:none;" id="logout-form">
+                @csrf</form>
         </div>
     </div>
 
