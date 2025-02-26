@@ -12,6 +12,7 @@ use App\Http\Controllers\MyPageController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ShopImageController;
 use App\Http\Controllers\Admin\ShopOwnerController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Owner\ShopOwnerDashboardController;
@@ -107,7 +108,16 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->midd
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('shop-owners', ShopOwnerController::class);
+
     Route::resource('users', UserController::class);
+
+    Route::get('/shop-images', [ShopImageController::class, 'index'])->name('shop-images.index');
+
+    Route::get('/shop-images/create', [ShopImageController::class, 'create'])->name('shop-images.create');
+
+    Route::post('/shop-images', [ShopImageController::class, 'store'])->name('shop-images.store');
+
+    Route::delete('/shop-images/{filename}', [ShopImageController::class, 'destroy'])->name('shop-images.destroy');
 });
 
 Route::prefix('owner')->name('owner.')->middleware(['auth', 'role:shop_owner'])->group(function () {
