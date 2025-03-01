@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{asset('css/admin.css')}}">
     <link rel="stylesheet" href="{{asset('css/shops.css')}}">
     <link rel="stylesheet" href="{{asset('css/notification.css')}}">
+    <link rel="stylesheet" href="{{asset('css/reminder.css')}}">
 </head>
 
 <body>
@@ -33,6 +34,9 @@
                 </li>
                 <li class="nav-item">
                     <a href="{{route('admin.mail.create')}}" class="nav-link">メール送信</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('admin.reminder.index')}}" class="nav-link">リマインダー設定</a>
                 </li>
                 <li class="nav-item">
                     <form action="{{route('logout')}}" class="nav-logout" method="POST">

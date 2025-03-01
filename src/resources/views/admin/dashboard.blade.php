@@ -30,6 +30,12 @@
                     <button class="button-link" type="submit">メールを送信する</button>
                 </form>
             </div>
+            <div class="dashboard-card">
+                <h2 class="card-title">リマインダー設定</h2>
+                <form action="{{route('admin.reminder.index')}}" method="GET">
+                    <button class="button-link" type="submit">設定を変更する</button>
+                </form>
+            </div>
         </div>
     </div>
 
