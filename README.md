@@ -125,37 +125,37 @@ Reseは企業のグループ会社向けに開発された飲食店予約サー�
 
 ・MySQL
 
-### インストール手順
+## インストール手順
 
-1.リポジトリのクローン
+### 1.リポジトリのクローン
 
 git clone https://github.com/sakura24999/Rese.git
 
 cd Rese
 
-2.環境変数の設定
+### 2.環境変数の設定
 
 cp .env.example .env
 
-3.依存パッケージのインストール
+### 3.依存パッケージのインストール
 
 composer install
 
 npm install
 
-4.アプリケーションキーの生成
+### 4.アプリケーションキーの生成
 
 php artisan key:generate
 
-5.データベースのマイグレーション
+### 5.データベースのマイグレーション
 
 php artisan migrate --seed
 
-6.開発サーバーの起動
+### 6.開発サーバーの起動
 
 php artisan serve
 
-7.Mailhogの確認方法
+### 7.Mailhogの確認方法
 
 メール送信機能をテストする場合は、Mailhogを使用しています。
 
