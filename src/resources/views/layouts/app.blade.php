@@ -52,7 +52,7 @@
         </div>
     </div>
 
-    @stack('script')
+    @stack('scripts')
 
     <script>
         window.appConfig = {
