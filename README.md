@@ -27,6 +27,7 @@ Reseは企業のグループ会社向けに開発された飲食店予約サー�
 以下はプロジェクトのER図です：
 
 <img width="1265" alt="ER図" src="./images/dbdiagram-rese.png" />
+/Users/sakura/Desktop/Rese/rese-app/images/dbdiagram-rese.png
 
 📋 機能一覧
 ✅ 実装済み機能
