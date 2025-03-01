@@ -2,10 +2,27 @@
 
 namespace App\Http;
 
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use App\Models\ReminderSettings;
 
 class Kernel extends HttpKernel
 {
+    protected function schedule(Schedule $schedule)
+    {
+        $settings = ReminderSettings::getSettings();
+
+        if ($settings->is_enabled) {
+            $schedule->command('app:send-reservation-reminders')->dailyAt($settings->send_time);
+        }
+    }
+
+    protected function commands()
+    {
+        $this->load(__DIR__ . '/Commands');
+
+        return base_path('routes/console.php');
+    }
     /**
      * The application's global HTTP middleware stack.
      *
@@ -64,8 +81,8 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'role' =>
-        \App\Http\Middleware\CheckRole::class,
+            \App\Http\Middleware\CheckRole::class,
         'admin' =>
-        \App\Http\Middleware\EnsureUserIsAdmin::class,
+            \App\Http\Middleware\EnsureUserIsAdmin::class,
     ];
 }

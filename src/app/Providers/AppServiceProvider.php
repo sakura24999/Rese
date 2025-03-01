@@ -34,5 +34,7 @@ class AppServiceProvider extends ServiceProvider
                 'url' => request()->url(),
             ]);
         });
+
+        View::addNamespace('mail', resource_path('views/emails'));
     }
 }

@@ -13,6 +13,7 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MailController;
+use App\Http\Controllers\Admin\ReminderController;
 use App\Http\Controllers\Admin\ShopImageController;
 use App\Http\Controllers\Admin\ShopOwnerController;
 use App\Http\Controllers\Admin\UserController;
@@ -123,6 +124,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::get('/mail', [MailController::class, 'create'])->name('mail.create');
 
     Route::post('/mail/send', [MailController::class, 'send'])->name('mail.send');
+
+    Route::get('/reminder', [ReminderController::class, 'index'])->name('reminder.index');
+
+    Route::put('/reminder', [ReminderController::class, 'update'])->name('reminder.update');
+
+    Route::post('/reminder/test', [ReminderController::class, 'sendTest'])->name('reminder.test');
 });
 
 Route::prefix('owner')->name('owner.')->middleware(['auth', 'role:shop_owner'])->group(function () {
