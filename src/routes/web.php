@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\ShopImageController;
 use App\Http\Controllers\Admin\ShopOwnerController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Owner\ShopOwnerDashboardController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\QrCodeController;
 
 /*
@@ -103,6 +104,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/shop/scan', function () {
         return view('shop.scan');
     })->name('shop.scan')->middleware('role:shop_owner');
+
+    Route::post('/reservations/{reservation}/payment', [PaymentController::class, 'processPayment'])->name('reservations.payment');
+
+    Route::post('/reservations/{reservation}/payment/demo', [PaymentController::class, 'processDemo'])->name('reservations.payment.demo');
 });
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');

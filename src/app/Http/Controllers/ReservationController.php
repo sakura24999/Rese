@@ -42,12 +42,11 @@ class ReservationController extends Controller
                 'request_time' => now()
             ]);
 
-            $reservation->status = 1;
-            $reservation->save();
+            $reservation->delete();
 
             Log::info('キャンセル成功', [
                 'reservation_id' => $reservation->id,
-                'status' => 'cancelled'
+                'status' => 'deleted'
             ]);
 
             return response()->json(['message' => '予約をキャンセルしました']);

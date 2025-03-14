@@ -19,6 +19,14 @@ class Reservation extends Model
         'time',
         'number_of_people',
         'status',
+        'is_paid',
+        'payment_id',
+        'paid_at'
+    ];
+
+    protected $casts = [
+        'is_paid' => 'boolean',
+        'paid_at' => 'datetime',
     ];
 
     public function user()
