@@ -27,6 +27,13 @@
                             <button class="cancel-btn" onclick="cancelReservation({{$reservation->id}})">×</button>
                             <button class="edit-btn" onclick="openEditModal({{$reservation->id}})">予約変更</button>
                             <a href="{{route('reservations.qrcode', $reservation->id)}}" class="qr-code-btn">QRコード</a>
+
+                            @if (!$reservation->is_paid)
+                                <button class="payment-btn" onclick="handlePayment({{$reservation->id}})">決済</button>
+                            @else
+                                <span class="payment-status">決済済み</span>
+
+                            @endif
                         </div>
                         <h3 class="reservation-number">予約{{$loop->iteration}}</h3>
                         <div>Shop: <span class="shop-name">{{$reservation->shop->name}}</span></div>
@@ -39,192 +46,18 @@
                 @push('scripts')
                     <meta name="csrf-token" content="{{csrf_token()}}">
                     <script>
-                        function cancelReservation(reservationId) {
-                            if (!confirm('予約をキャンセルしてもよろしいですか？')) {
-                                return;
+                        window.paymentConfig = {
+                            stripeKey: "{{config('services.stripe.key')}}",
+                            routes: {
+                                demo: "{{route('reservations.payment.demo', ['reservation' => '_ID_'])}}",
+                                payment: "{{route('reservations.payment', ['reservation' => '_ID_'])}}"
                             }
-
-                            console.log(`キャンセルリクエスト開始 - 予約ID: ${reservationId}`);
-
-                            fetch(`/reservations/${reservationId}`, {
-                                method: 'DELETE',
-                                headers: {
-                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                                    'Content-Type': 'application/json',
-                                },
-                            })
-                                .then(response => {
-                                    console.log('レスポンスステータス:', response.status);
-                                    return response.json();
-                                })
-                                .then(data => {
-                                    console.log('サーバーレスポンス:', data);
-                                    alert(data.message);
-
-                                    const card = document.getElementById(`reservation-${reservationId}`);
-                                    if (card) {
-                                        card.style.opacity = '0';
-                                        setTimeout(() => {
-                                            card.remove();
-
-                                            const reservationCards = document.querySelectorAll('.reservation-card');
-                                            reservationCards.forEach((card, index) => {
-                                                const reservationNumber = card.querySelector('.reservation-number');
-                                                if (reservationNumber) {
-                                                    reservationNumber.textContent = `予約${index + 1}`;
-                                                }
-                                            });
-                                        }, 300);
-                                    }
-                                })
-                                .catch(error => {
-                                    console.error('Error:', error);
-                                    alert('キャンセルに失敗しました。');
-                                });
-                        }
+                        };
                     </script>
 
-                    <script>
-                        let currentReservationId = null;
-
-                        function openEditModal(reservationId) {
-                            currentReservationId = reservationId;
-                            const modal = document.getElementById('editReservationModal');
-                            const reservation = document.getElementById(`reservation-${reservationId}`);
-
-                            if (!reservation) {
-                                console.error('reservation card not found');
-                                return;
-                            }
-
-                            const date = reservation.querySelector('[data-date]').getAttribute('data-date');
-                            const time = reservation.querySelector('[data-time]').getAttribute('data-time');
-                            const number = reservation.querySelector('[data-number]').getAttribute('data-number');
-                            const shopName = reservation.querySelector('.shop-name').textContent;
-
-                            modal.querySelector('.shop-name').textContent = shopName;
-
-                            document.getElementById('editDate').value = date;
-                            document.getElementById('editTime').value = time;
-                            document.getElementById('editNumber').value = number;
-
-                            modal.style.display = 'block';
-
-                            generateTimeOptions();
-
-                            const timeSelect = document.getElementById('editTime');
-                            if (timeSelect) {
-                                const options = timeSelect.options;
-                                for (let i = 0; i < options.length; i++) {
-                                    if (options[i].value === time) {
-                                        timeSelect.selectedIndex = i;
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-
-                        function closeEditModal() {
-                            const modal = document.getElementById('editReservationModal');
-                            modal.style.display = 'none';
-                            currentReservationId = null;
-                        }
-
-                        function generateTimeOptions() {
-                            const timeSelect = document.getElementById('editTime');
-                            timeSelect.innerHTML = '';
-
-
-                            for (let hour = 11; hour <= 22; hour++) {
-                                for (let minute of ['00', '30']) {
-                                    if (hour === 22 && minute === '30') continue;
-                                    const time = `${String(hour).padStart(2, '0')}:${minute}`;
-                                    const option = new Option(time, time);
-                                    timeSelect.add(option);
-                                }
-                            }
-                        }
-
-                        function updateReservationCard(reservationId, newData) {
-                            console.log('更新開始:', {
-                                reservationId,
-                                newData
-                            });
-
-                            const card = document.getElementById(`reservation-${reservationId}`);
-                            console.log('予約カード要素:', card);
-
-                            if (card) {
-                                const dateElement = card.querySelector('[data-date]');
-                                const timeElement = card.querySelector('[data-time]');
-                                const numberElement = card.querySelector('[data-number]');
-
-                                console.log('取得した要素:', {
-                                    dateElement,
-                                    timeElement,
-                                    numberElement
-                                });
-
-                                if (dateElement) {
-                                    dateElement.textContent = `Date: ${newData.date}`;
-                                    dateElement.setAttribute('data-date', newData.date);
-                                }
-                                if (timeElement) {
-                                    timeElement.textContent = `Time: ${newData.time}`;
-                                    timeElement.setAttribute('data-time', newData.time);
-                                }
-                                if (numberElement) {
-                                    numberElement.textContent = `Number: ${newData.number_of_people}人`;
-                                    numberElement.setAttribute('data-number', newData.number_of_people);
-                                }
-                            } else {
-                                console.error('予約カードが見つかりません:', reservationId);
-                            }
-                        }
-
-                        document.addEventListener('DOMContentLoaded', function () {
-                            const editForm = document.getElementById('editReservationForm');
-                            if (editForm) {
-                                editForm.addEventListener('submit', async (e) => {
-                                    e.preventDefault();
-
-                                    const formData = new FormData(e.target);
-                                    const data = {
-                                        date: formData.get('date'),
-                                        time: formData.get('time'),
-                                        number_of_people: formData.get('number_of_people')
-                                    };
-
-                                    try {
-                                        const response = await fetch(`/reservations/${currentReservationId}`, {
-                                            method: 'PATCH',
-                                            headers: {
-                                                'Content-Type': 'application/json',
-                                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                                            },
-                                            body: JSON.stringify(data)
-                                        });
-
-                                        const result = await response.json();
-
-                                        if (response.ok) {
-                                            updateReservationCard(currentReservationId, data);
-                                            closeEditModal();
-                                            alert('予約を更新しました');
-                                            window.location.reload();
-                                        } else {
-                                            throw new Error(result.message || '予約の更新に失敗しました');
-                                        }
-                                    } catch (error) {
-                                        console.error('Error:', error);
-                                        alert(error.message || '予約の更新に失敗しました')
-                                    }
-                                })
-                            }
-
-
-                        });
-                    </script>
+                    <script src="{{asset('js/reservation.js')}}"></script>
+                    <script src="https://js.stripe.com/v3/"></script>
+                    <script src="{{asset('js/payment.js')}}"></script>
                 @endpush
             </div>
 
@@ -284,6 +117,30 @@
                 </form>
             </div>
         </div>
-    </div>
 
+        <div class="modal" id="paymentModal" style="display: none;">
+            <div class="modal-content payment-modal">
+                <h2>予約の決済</h2>
+                <div class="payment-details">
+                    <div class="shop-name"></div>
+                    <div class="reservation-date"></div>
+                    <div class="reservation-time"></div>
+                    <div class="reservation-number"></div>
+                    <div class="payment-amount"></div>
+                </div>
+
+                <form id="paymentForm">
+                    <div id="card-element">
+                        <!-- StripeのCardElementがここに挿入されます -->
+                    </div>
+                    <div id="card-errors" role="alert"></div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="cancel-modal-btn" onclick="closePaymentModal()">キャンセル</button>
+                        <button type="submit" class="submit-btn" id="submit-payment">決済を完了する</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
